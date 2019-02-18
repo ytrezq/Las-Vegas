@@ -2,9 +2,8 @@
 
 The Las Vegas Algorithm is implemented in C++. Serial and Parallel implementations are available.
 Both versions of the code are seperated in seperate directories. A Linux like system is assumed.
-
-## ECDLP_Parallel directory contains the parallel implementation
-## ECDLP_Serial directory contains the serial implementation
+ECDLP_Parallel directory contains the parallel implementation
+ECDLP_Serial directory contains the serial implementation
 
 # Compiling the Code.
 
