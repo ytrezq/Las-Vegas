@@ -30,4 +30,5 @@ Each processor upon receiving data executes the 2-minor algorithm.
 
 ###Compiling the Code.
 Parallel Code:- mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
+
 Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
