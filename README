@@ -21,7 +21,8 @@ The root processor uses the Open MPI broadcast functionality to share the kernel
 Each processor upon receiving data executes the 2-minor algorithm.
 The 2-minor algorithm searches for a 2x2 sub-matrix in the kernel such that the determinant is zero.
 Searching for 2-minors is an embarrassingly parallel problem. 
-Thus increasing the computationl resources will reduce the time taken to solve ECDLP.
+Thus the speed up achieved by a parallel implementation over the serial implementation is substantial.
+
 
 ###Dependencies:
 	1. C/C++ compiler
