@@ -1,9 +1,13 @@
 # Las Vegas Algorithm to solve ECDLP #
 
-The Las Vegas Algorithm is implemented in C++. Serial and Parallel implementations are available.
-Both versions of the code are seperated in seperate directories. A Linux like system is assumed.
-ECDLP_Parallel directory contains the parallel implementation.
-ECDLP_Serial directory contains the serial implementation.
+This repository contains the implementation of the Las Vegas Algorithm in C++. Serial and Parallel implementations are available.
+ECDLP_Parallel and ECDLP_Serial directories contains the parallel and serial implementations respectively.
+
+##Software dependencies :##
+###1) C/C++ compiler###
+###2) OpemMPI###
+###3) Number Theory Library (NTL) and GNU-GMP###
+###4) Sage (to genetate inputs)###
 
 # Compiling the Code.#
 
@@ -13,8 +17,3 @@ mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
 ## Serial Code ##
 g++ *.cpp -lntl -lgmp -O3 -o ecdlp
 
-##The following are the prerequisites##
-###1) C/C++ compiler###
-###2) OpemMPI###
-###3) Number Theory Library (NTL) and GNU-GMP###
-###4) Sage (to genetate inputs)###
