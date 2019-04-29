@@ -4,10 +4,10 @@ This repository contains the implementation of the Las Vegas Algorithm in C++. S
 ECDLP_Parallel and ECDLP_Serial directories contains the parallel and serial implementations respectively.
 
 ###Dependencies:
-	1. ####C/C++ compiler <br>
-	2. ####OpemMPI
-	3. ####Number Theory Library (NTL) and GNU-GMP
-	4. ####Sage (genetate input)
+	#####1. C/C++ compiler <br>
+	2. OpemMPI
+	3. Number Theory Library (NTL) and GNU-GMP
+	4. Sage (genetate input)
 
 ###About the code.
 
