@@ -13,14 +13,15 @@ The serial implementation generates a single kernel and executes the 2-minor alg
 
 
 ####Parallel Implementation:
-All the processors generate kernel independent of each other. Each processor stores the kernel in a 
-separate file. A directory named kernel stores the kernel files. The root processor reads the files 
-from the kernel directory.
-The root processor also computes the partition data. 
+All the processors generate a kernel simultaneously. Each processor stores the kernel in a 
+separate file. A directory named kernel stores these kernel files. The root processor reads the files 
+from the kernel directory and computes partition data.
 Partition data is the division of work among processors.
 The root processor uses the Open MPI broadcast functionality to share the kernel along with the partition data among processors. 
 Each processor upon receiving data executes the 2-minor algorithm.
-
+The 2-minor algorithm searches for a 2x2 sub-matrix in the kernel such that the determinant is zero.
+Searching for 2-minors is an embarrassingly parallel problem. 
+Thus increasing the computationl resources will reduce the time taken to solve ECDLP.
 
 ###Dependencies:
 	1. C/C++ compiler
