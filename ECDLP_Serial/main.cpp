@@ -67,7 +67,7 @@ void ECDLP_GF2EX() {
     }
     // </editor-fold>
 
-    ZZ iterationCnt = E1.lasVegasECDLP_26(P, Q, dd.data[0].ordP, 3);
+    ZZ iterationCnt = E1.lasVegasECDLP_15(P, Q, dd.data[0].ordP, 3);
 
 }
 
