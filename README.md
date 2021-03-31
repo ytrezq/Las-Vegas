@@ -1,5 +1,5 @@
 ## Las Vegas Algorithm to solve ECDLP
-<p style="text-align: center;">
+<p align="center">
 This repository contains the implementation of the [Las Vegas Algorithm](http://issc.unipune.ac.in/attachments/lasVegas.pdf) in C++. Serial and Parallel implementations are available.
 ECDLP_Parallel and ECDLP_Serial directories contains the parallel and serial implementations respectively.
 </p>
