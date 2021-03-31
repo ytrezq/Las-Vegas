@@ -12,17 +12,20 @@
 #include <NTL/lzz_p.h>
 
 #define verbose 0
-#define print_v  if(verbose) cout 
+#define print_v  \
+    if (verbose) \
+    cout
 
-typedef struct data_1 {
+typedef struct data_1
+{
     ulong i_start;
     ulong j_start;
     ulong quota;
 } partitionData_2x2_1;
 
-void printPartitionData2x2_1(const partitionData_2x2_1 pD, const int processorId) {
-    print_v << " Processor :: " << processorId << " >> i_start :: " << pD.i_start << "\t j_start :: " << pD.j_start <<
-            "\t quota :: " << pD.quota << endl;
+void printPartitionData2x2_1(const partitionData_2x2_1 pD, const int processorId)
+{
+    print_v << " Processor :: " << processorId << " >> i_start :: " << pD.i_start << "\t j_start :: " << pD.j_start << "\t quota :: " << pD.quota << endl;
 }
 
 /**
@@ -33,11 +36,12 @@ void printPartitionData2x2_1(const partitionData_2x2_1 pD, const int processorId
  * @param rD
  * @return true or false
  */
-bool is_2by2_DeterminantZero_1(const mat_GF2E &mat, const partitionData_2x2_1 &pD, resultData &rD, int processorId1) {
+bool is_2by2_DeterminantZero_1(const mat_GF2E &mat, const partitionData_2x2_1 &pD, resultData &rD, int processorId1)
+{
 
     double s_time = GetTime();
     int processorId, totalNumberOfProcessors;
-    char *NodeName = new char [1000];
+    char *NodeName = new char[1000];
     int NodeNameLen;
 
     MPI_Comm_rank(MPI_COMM_WORLD, &processorId);
@@ -50,15 +54,18 @@ bool is_2by2_DeterminantZero_1(const mat_GF2E &mat, const partitionData_2x2_1 &p
     ulong n = mat.NumRows();
     ulong cnt = 0;
     ulong depdencyCol1, depdencyCol2;
-    for (ulong row1 = A; row1 < n; ++row1) {
-        for (ulong row2 = B; row2 < n; ++row2) {
+    for (ulong row1 = A; row1 < n; ++row1)
+    {
+        for (ulong row2 = B; row2 < n; ++row2)
+        {
 
             GF2E result[n];
 
             for (ulong col = 0; col < n; ++col)
                 result[col] = mat[row1][col] / mat[row2][col];
 
-            if (isDependenceFound(result, n, depdencyCol1, depdencyCol2)) {
+            if (isDependenceFound(result, n, depdencyCol1, depdencyCol2))
+            {
 
                 rD.col1 = depdencyCol1;
                 rD.col2 = depdencyCol2;
@@ -72,7 +79,8 @@ bool is_2by2_DeterminantZero_1(const mat_GF2E &mat, const partitionData_2x2_1 &p
             }
 
             cnt++;
-            if (cnt == pD.quota) {
+            if (cnt == pD.quota)
+            {
                 double e_time = GetTime();
                 print_v << "\n Iterations completed by processorId :: " << processorId << "\t on node :: " << NodeName << "\t Time :: " << (e_time - s_time) << " seconds \n";
 
@@ -84,7 +92,8 @@ bool is_2by2_DeterminantZero_1(const mat_GF2E &mat, const partitionData_2x2_1 &p
     }
 }
 
-void sendPartitionDataToProcessor1_1(const partitionData_2x2_1 &pD, const ulong sendToProcessor) {
+void sendPartitionDataToProcessor1_1(const partitionData_2x2_1 &pD, const ulong sendToProcessor)
+{
     ulong arr[3];
     arr[0] = pD.i_start;
     arr[1] = pD.j_start;
@@ -93,7 +102,8 @@ void sendPartitionDataToProcessor1_1(const partitionData_2x2_1 &pD, const ulong 
     MPI_Send(arr, 3, MPI_UNSIGNED_LONG, sendToProcessor, 0, MPI_COMM_WORLD);
 }
 
-void receiveDataOnProcessor1_1(partitionData_2x2_1 &pD, int processorId) {
+void receiveDataOnProcessor1_1(partitionData_2x2_1 &pD, int processorId)
+{
     ulong arr[3];
     MPI_Recv(arr, 3, MPI_UNSIGNED_LONG, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
@@ -102,31 +112,35 @@ void receiveDataOnProcessor1_1(partitionData_2x2_1 &pD, int processorId) {
     pD.quota = arr[2];
 }
 
-void makeKernelFromMat_1(const mat_GF2E &mat, mat_GF2E &ker) {
+void makeKernelFromMat_1(const mat_GF2E &mat, mat_GF2E &ker)
+{
 
     ulong row = mat.NumRows();
     ulong col = mat.NumCols();
 
-    for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) {
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
             ker[i][j] = mat[i][j];
         }
     }
 
     int onePosition = ker.NumCols() - 1;
-    for (int i = 0; i < row; i++) {
+    for (int i = 0; i < row; i++)
+    {
         ker[i][onePosition] = 1;
         onePosition--;
     }
-
 }
 
-void EC_GF2E::generateKernels(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const int offset) {
+void EC_GF2E::generateKernels(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const int offset)
+{
 
     int processorId, totalNumberOfProcessors;
     ZZ iterationCnt;
 
-    char *NodeName = new char [1000];
+    char *NodeName = new char[1000];
     int NodeNameLen;
 
     MPI_Comm_rank(MPI_COMM_WORLD, &processorId);
@@ -141,12 +155,13 @@ void EC_GF2E::generateKernels(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const
     const ulong n = offset * p;
     const ulong r = 3 * n;
 
-    if (processorId == 0) {
+    if (processorId == 0)
+    {
         print_v << "\n sqrt_p :: " << sqrt_p << "\t n :: " << n << "\t r :: " << r << endl;
     }
 
     const ulong k_randomNums = (3 * n) - 1, t_randomNums = r + 1;
-    const ulong mat_row = r + r, mat_col = ((n + 1)*(n + 2)) / 2;
+    const ulong mat_row = r + r, mat_col = ((n + 1) * (n + 2)) / 2;
     ZZ PQ_randomNumbers[(k_randomNums + t_randomNums)];
 
     ulong weightedVector_arr[mat_col][3];
@@ -196,9 +211,11 @@ void EC_GF2E::generateKernels(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const
     sprintf(fileName, "kernel/p_%u_%u.txt", processorId, numberOfProcessors);
 
     ofstream fout(fileName);
-    fout << k_randomNums << "\n" << t_randomNums << endl;
+    fout << k_randomNums << "\n"
+         << t_randomNums << endl;
 
-    for (ulong i = 0; i < (k_randomNums + t_randomNums); ++i) {
+    for (ulong i = 0; i < (k_randomNums + t_randomNums); ++i)
+    {
         fout << PQ_randomNumbers[i] << "\t";
     }
     fout << endl;
@@ -228,25 +245,28 @@ void EC_GF2E::generateKernels(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const
  * @param ordP : Order of P
  * @return : DLP
  */
-ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const int offset) {
-    
+ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const int offset)
+{
+
     ZZ iterationCnt;
     ulong localOffset = offset;
     ulong numberOfKernelsGenerated = 0;
 
-    while (1) {
+    while (1)
+    {
 
         iterationCnt++;
         int processorId, totalNumberOfProcessors;
 
-        char *NodeName = new char [1000];
+        char *NodeName = new char[1000];
         int NodeNameLen;
 
         MPI_Comm_rank(MPI_COMM_WORLD, &processorId);
         MPI_Comm_size(MPI_COMM_WORLD, &totalNumberOfProcessors);
         MPI::Get_processor_name(NodeName, NodeNameLen);
 
-        if (processorId == 0) {
+        if (processorId == 0)
+        {
             cout << "\n Generating " << totalNumberOfProcessors << " kernels...";
             cout.flush();
         }
@@ -259,7 +279,8 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
         MPI_Barrier(MPI_COMM_WORLD);
         double k_generationTimeEnd = GetTime();
 
-        if (processorId == 0) {
+        if (processorId == 0)
+        {
             cout << "...[Done]\t Time :: " << (k_generationTimeEnd - k_generationTimeStart) << " Secs." << endl;
         }
 
@@ -272,8 +293,10 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
         numberOfKernelsGenerated += (totalNumberOfProcessors);
         s_time = GetTime();
 
-        while (1) {
-            if (processorId == 0) {
+        while (1)
+        {
+            if (processorId == 0)
+            {
 
                 char *fileName = new char[200];
                 sprintf(fileName, "kernel/p_%u.txt", fileId);
@@ -287,11 +310,12 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 fin >> t_randomNums;
                 ZZ PQ_randomNumbers[(k_randomNums + t_randomNums)];
 
-                for (ulong i = 0; i < (k_randomNums + t_randomNums); ++i) {
+                for (ulong i = 0; i < (k_randomNums + t_randomNums); ++i)
+                {
                     fin >> PQ_randomNumbers[i];
                 }
                 mat_GF2E ker;
-                fin>>ker;
+                fin >> ker;
 
                 double m_time, k_time;
                 int pId;
@@ -302,8 +326,7 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 fin >> pName;
 
                 s_time = GetTime();
-                cout << " Processing File :: " << fileName << "\t m_time :: " << std::setw(6) << m_time << "\t k_time :: " << std::setw(6) <<
-                        k_time << "\t offset :: " << (localOffset) << "\t pId :: " << pId << "\t Node-Name :: " << std::setw(6) << pName;
+                cout << " Processing File :: " << fileName << "\t m_time :: " << std::setw(6) << m_time << "\t k_time :: " << std::setw(6) << k_time << "\t offset :: " << (localOffset) << "\t pId :: " << pId << "\t Node-Name :: " << std::setw(6) << pName;
 
                 // <editor-fold defaultstate="collapsed" desc="BCast mat to all processors...">
 
@@ -345,7 +368,7 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 ulong numberOfProcessors = totalNumberOfProcessors - 1;
                 ZZ combos = nCr(mat.NumRows(), 2);
                 ZZ numberOfCombosEachProcessorGets = conv<ZZ>(combos / (conv<ZZ>(numberOfProcessors)));
-                ulong numberOfExtraCombos = conv<ulong>((combos) - conv<ZZ>(numberOfCombosEachProcessorGets * numberOfProcessors));
+                ulong numberOfExtraCombos = conv<ulong>((combos)-conv<ZZ>(numberOfCombosEachProcessorGets * numberOfProcessors));
 
                 print_v << "\n Total-Combinations :: " << combos;
                 print_v << "\t numberOfCombosEachProcessorGets :: " << numberOfCombosEachProcessorGets;
@@ -367,11 +390,14 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 ulong quota = conv<ulong>(numberOfCombosEachProcessorGets);
                 ulong fCnt = 0;
                 ulong dimenson = mat.NumRows();
-                for (ulong i = 0; i < dimenson; ++i) {
-                    for (ulong j = i + 1; j < dimenson; ++j) {
+                for (ulong i = 0; i < dimenson; ++i)
+                {
+                    for (ulong j = i + 1; j < dimenson; ++j)
+                    {
                         cnt++;
                         fCnt++;
-                        if (cnt == quota) {
+                        if (cnt == quota)
+                        {
                             pD[pDCnt].i_start = i;
                             pD[pDCnt].quota = conv<ulong>(numberOfCombosEachProcessorGets);
                             pD[pDCnt].j_start = j;
@@ -387,7 +413,8 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 print_v << " [Done] \t Time :: " << (e_time3 - s_time3) << endl;
                 // </editor-fold>
 
-                for (ulong i = 1; i <= numberOfProcessors; ++i) {
+                for (ulong i = 1; i <= numberOfProcessors; ++i)
+                {
                     sendPartitionDataToProcessor1_1(pD[(i - 1)], i);
                 }
 
@@ -395,11 +422,13 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
 
                 fin.close();
                 delete fileName;
-            } else {
+            }
+            else
+            {
 
                 int strLen;
                 MPI_Bcast(&strLen, 1, MPI_INT, 0, MPI_COMM_WORLD);
-                char* strKer_Ci = new char[strLen];
+                char *strKer_Ci = new char[strLen];
                 MPI_Bcast(strKer_Ci, strLen, MPI_CHAR, 0, MPI_COMM_WORLD);
 
                 mat_GF2E ker;
@@ -413,7 +442,7 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 //Recv RandomNumber
                 int randomNumLen;
                 MPI_Bcast(&randomNumLen, 1, MPI_INT, 0, MPI_COMM_WORLD);
-                char* strRandomNum = new char[randomNumLen];
+                char *strRandomNum = new char[randomNumLen];
                 MPI_Bcast(strRandomNum, randomNumLen, MPI_CHAR, 0, MPI_COMM_WORLD);
 
                 ss2 << strRandomNum;
@@ -432,12 +461,15 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                 getMatrixFromKernel(mat, ker);
 
                 ulong numberOfProcessors = totalNumberOfProcessors - 1;
-                for (ulong i = 1; i <= numberOfProcessors; ++i) {
-                    if (processorId == i) {
+                for (ulong i = 1; i <= numberOfProcessors; ++i)
+                {
+                    if (processorId == i)
+                    {
                         partitionData_2x2_1 pD;
                         resultData_2x2 rD;
                         receiveDataOnProcessor1_1(pD, processorId);
-                        if (is_2by2_DeterminantZero_1(mat, pD, rD, processorId)) {
+                        if (is_2by2_DeterminantZero_1(mat, pD, rD, processorId))
+                        {
                             GF2E det = (mat[rD.row1][rD.col1] * mat[rD.row2][rD.col2]) - (mat[rD.row1][rD.col2] * mat[rD.row2][rD.col1]);
                             DLP = getDlp_R2<mat_GF2E>(ker, k_randomNums, t_randomNums, PQ_randomNumbers, ordP, rD);
 
@@ -445,7 +477,7 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
                             cout << " DLP :: " << DLP << "\t";
                             cout << "iterationCnt :: " << iterationCnt << "\n";
                             cout << "\n Total number of kernels generated :: " << numberOfKernelsGenerated << endl;
-                            
+
                             dlpSolvedFlag = 1;
                             MPI_Abort(MPI_COMM_WORLD, 10);
                         }
@@ -454,7 +486,8 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
             }
 
             MPI_Barrier(MPI_COMM_WORLD);
-            if (processorId == 0) {
+            if (processorId == 0)
+            {
                 e_time = GetTime();
                 cout << "\t time :: " << (e_time - s_time) << endl;
             }
@@ -465,7 +498,8 @@ ZZ EC_GF2E::lasVegasECDLP_26(EC_GF2E_Point &P, EC_GF2E_Point &Q, ZZ ordP, const 
         }
 
         iterationTimeEnd = GetTime();
-        if (processorId == 0) {
+        if (processorId == 0)
+        {
             cout << "\n iteration :: " << iterationCnt << "  Kernel-Set-Iteration-Time :: " << (iterationTimeEnd - iterationTimeStart) << " sec. \n";
             cout << "\n=======================================================\n";
         }
