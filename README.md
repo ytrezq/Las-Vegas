@@ -30,10 +30,10 @@ Thus the speed up achieved by a parallel implementation over the serial implemen
 	3. Number Theory Library (NTL) and GNU-GMP
 	4. Sage (genetate input)
 
-### Compiling the Code.
-Parallel Code:- mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
+### Compiling/Running Parallel Code.
+	1. Parallel Code:- mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
+	2. Running the Parallel Code : mpirun -n 2 ecdlp
 
-### Running the Parallel Code : mpirun -n 2 ecdlp
-
-### Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
-### Running Serial Code : ./ecdlp
+### Compiling/Running Serial Code
+	1. Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
+	2. Running Serial Code : ./ecdlp
