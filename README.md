@@ -3,7 +3,7 @@
 This repository contains the implementation of the [Las Vegas Algorithm](http://issc.unipune.ac.in/attachments/lasVegas.pdf) in C++. Serial and Parallel implementations are available.
 ECDLP_Parallel and ECDLP_Serial directories contains the parallel and serial implementations respectively.
 
-###About the code.
+### About the code.
 Projective coordinates were used to implement Elliptic curve operations. Input for algorithm
 is generated using SageMath. This algorithm is implemented for Binary as well as prime fields. 
 The classes EC_GF2E and EC_ZZp implement the Las Vegas algorithm as their member function  which is named lasVegasECDLP.
@@ -12,7 +12,7 @@ the order of P and a interger value called offset.
 The serial implementation generates a single kernel and executes the 2-minor algorithm.
 
 
-####Parallel Implementation:
+#### Parallel Implementation:
 All the processors generate a kernel simultaneously. Each processor stores the kernel in a 
 separate file. A directory named kernel stores these kernel files. The root processor reads the files 
 from the kernel directory and computes partition data.
@@ -24,15 +24,16 @@ Searching for 2-minors is an embarrassingly parallel problem.
 Thus the speed up achieved by a parallel implementation over the serial implementation is substantial.
 
 
-###Dependencies:
+### Dependencies:
 	1. C/C++ compiler
 	2. OpemMPI
 	3. Number Theory Library (NTL) and GNU-GMP
 	4. Sage (genetate input)
 
-###Compiling the Code.
+### Compiling the Code.
 Parallel Code:- mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
 
-###Running the Parallel Code : mpirun -n 2 ecdlp
+### Running the Parallel Code : mpirun -n 2 ecdlp
 
-Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
+### Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
+### Running Serial Code : ./ecdlp
