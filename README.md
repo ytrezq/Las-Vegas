@@ -1,21 +1,18 @@
 ## Las Vegas Algorithm to solve ECDLP
-<p align="center">
+
 This repository contains the implementation of the [Las Vegas Algorithm](http://issc.unipune.ac.in/attachments/lasVegas.pdf) in C++. Serial and Parallel implementations are available.
 ECDLP_Parallel and ECDLP_Serial directories contains the parallel and serial implementations respectively.
-</p>
 
 ### About the code.
-<p style="text-align: center;">
 Projective coordinates were used to implement Elliptic curve operations. Input for algorithm
 is generated using SageMath. This algorithm is implemented for Binary as well as prime fields. 
 The classes EC_GF2E and EC_ZZp implement the Las Vegas algorithm as their member function  which is named lasVegasECDLP.
 The Las Vegas algorithm takes the following as input: Elliptic curve points P and Q, 
 the order of P and a interger value called offset.
 The serial implementation generates a single kernel and executes the 2-minor algorithm.
-</p>
+
 
 #### Parallel Implementation:
-<p style="text-align: center;">
 All the processors generate a kernel simultaneously. Each processor stores the kernel in a 
 separate file. A directory named kernel stores these kernel files. The root processor reads the files 
 from the kernel directory and computes partition data.
@@ -25,7 +22,7 @@ Each processor upon receiving data executes the 2-minor algorithm.
 The 2-minor algorithm searches for a 2x2 sub-matrix in the kernel such that the determinant is zero.
 Searching for 2-minors is an embarrassingly parallel problem. 
 Thus the speed up achieved by a parallel implementation over the serial implementation is substantial.
-</p>
+
 
 ### Dependencies:
 	1. C/C++ compiler
