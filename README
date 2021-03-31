@@ -33,4 +33,6 @@ Thus the speed up achieved by a parallel implementation over the serial implemen
 ###Compiling the Code.
 Parallel Code:- mpic++ *.cpp -lntl -lgmp -O3 -o ecdlp
 
+###Running the Parallel Code : mpirun -n 2 ecdlp
+
 Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
