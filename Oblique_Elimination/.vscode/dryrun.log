@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/issc/Documents/MPI_JOBS/bitbucket/lasvegas-ecdlp/Oblique_Elimination'
+make: 'lasVegas' is up to date.
+make: Leaving directory '/home/issc/Documents/MPI_JOBS/bitbucket/lasvegas-ecdlp/Oblique_Elimination'
+ 
