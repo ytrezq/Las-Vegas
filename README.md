@@ -37,3 +37,9 @@ Thus the speed up achieved by a parallel implementation over the serial implemen
 ### Compiling/Running Serial Code
 	1. Serial Code:- g++ *.cpp -lntl -lgmp -O3 -o ecdlp
 	2. Running Serial Code : ./ecdlp
+
+### Compiling/Running Parallel code inside APM directory
+	1. This directory is self contained. It consists all the code for algorithms to solve ECDLP.
+	2. This directory also contains binary inputs for 20 thorough 80 bits. 
+	3. Code here can be compiled using make command. An executable named lasVegas is generated.
+	4. Run the code : mpirun -n 20 ./lasVegas
