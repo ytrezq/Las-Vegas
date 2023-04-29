@@ -65,7 +65,7 @@ ZZ lasVegas(_EC_Point_ &P, _EC_Point_ &Q, ZZ ordP, ulong _p, const int offset, V
             // flag = principleDeviation_parallel_8<_mat_, FiniteField>(ordP);
             // flag = principleDeviation_parallel<_mat_, FiniteField>(ordP);
 
-            flag = principleDeviation_parallel_3_small<_mat_, FiniteField>(ordP);
+            flag = principleDeviation_parallel_3<_mat_, FiniteField>(ordP);
 
             // flag = reverse_obliqueElimination<_mat_, FiniteField>(ordP);
             // flag = obliqueElimination<_mat_, FiniteField>(ordP);
